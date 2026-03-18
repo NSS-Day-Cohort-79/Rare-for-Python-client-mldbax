@@ -12,11 +12,14 @@ export const CategoryList = () => {
 
   return (
     <>
-      <div>
+      <div class="content is-normal">
+        <h1>Categories</h1>
         {categoryArray.map((category) => {
           return (
-            <div key={category.id}>
-              <div>{category.label}</div>
+            <div class="tags has-addons are-medium" key={category.id}>
+              <a class="tag is-primary is-hoverable">{category.label}</a>
+              <a class="tag is-light">&#9881;</a>
+              <a class="tag is-delete"></a>
             </div>
           );
         })}
