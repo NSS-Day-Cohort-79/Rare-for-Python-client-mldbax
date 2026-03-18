@@ -17,9 +17,9 @@ export const CategoryList = () => {
         {categoryArray.map((category) => {
           return (
             <div class="tags has-addons are-medium" key={category.id}>
-              <a class="tag is-primary is-hoverable">{category.label}</a>
-              <a class="tag is-light">&#9881;</a>
-              <a class="tag is-delete"></a>
+              <a class="tag is-primary is-hoverable" href="/">{category.label}</a>
+              <a class="tag is-light" href="/">&#9881;</a>
+              <a class="tag is-delete" href="/"> </a>
             </div>
           );
         })}
