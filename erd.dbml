@@ -1,0 +1,65 @@
+Table Users {
+    id int pk
+    first_name varchar
+    last_name varchar
+    email varchar
+    bio varchar
+    username varchar
+    password varchar
+    profile_image_url varchar
+    created_on date
+    active boolean
+}
+
+Table Subscriptions {
+    id int [pk]
+    follower_id int [ref: > Users.id]
+    author_id int [ref: > Users.id]
+    created_on date
+}
+Table Posts {
+    id int [pk]
+    user_id int [ref: > Users.id]
+    category_id int [ref: > Categories.id]
+    title varchar
+    publication_date date
+    image_url varchar
+    content varchar
+    approved boolean
+}
+
+Table Comments {
+    id int [pk]
+    author_id int [ref: > Users.id]
+    post_id int [ref: > Posts.id]
+    content varchar
+}
+
+Table Tags {
+    id int [pk]
+    label varchar
+}
+
+Table PostTags {
+    id int [pk]
+    post_id int [ref: > Posts.id]
+    tag_id int [ref: > Tags.id]
+}
+
+Table Categories {
+    id int [pk]
+    label varchar
+}
+
+Table Reactions {
+    id int [pk]
+    emoji int
+}
+
+Table PostReactions {
+    id int [pk]
+    reaction_id int [ref: > Reactions.id]
+    user_id int [ref: > Users.id]
+    post_id int [ref: > Posts.id]
+}
+   
