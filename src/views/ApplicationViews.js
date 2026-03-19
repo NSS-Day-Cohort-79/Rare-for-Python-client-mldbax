@@ -4,6 +4,7 @@ import { Register } from "../components/auth/Register";
 import { Authorized } from "./Authorized";
 import { TagList } from "../components/tags/TagList";
 import { CategoryList } from "../components/categories/CategoryList";
+import { CreateTag } from "../components/tags/CreateTag";
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
@@ -14,7 +15,10 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route element={<Authorized token={token} />}>
           {/* Add Routes here */}
           <Route path="/categories" element={<CategoryList />} />
-          <Route path="/tags" element={<TagList />} />
+          <Route path="/tags">
+            <Route index element={<TagList />} />
+            <Route path="new" element={<CreateTag />} />
+          </Route>
         </Route>
       </Routes>
     </>

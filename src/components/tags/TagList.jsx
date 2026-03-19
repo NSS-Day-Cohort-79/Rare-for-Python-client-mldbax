@@ -10,6 +10,9 @@ export const TagList = () => {
 
   return (
     <>
+      <a class="button is-primary" href="tags/new">
+        Create
+      </a>
       <div class="container">
         <div class="section is-normal">
           <h1 class="title">Tags</h1>
