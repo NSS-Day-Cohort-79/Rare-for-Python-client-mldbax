@@ -10,7 +10,6 @@ export const PostList = () => {
     getApprovedPosts().then(setAllPosts);
   }, []);
 
-  console.log(allPosts)
   return (
     <div className="container">
       <div className="columns is-centered">
