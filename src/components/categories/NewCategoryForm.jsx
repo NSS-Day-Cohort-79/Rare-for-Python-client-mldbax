@@ -2,15 +2,22 @@ import { useEffect, useState } from "react";
 import { getCategories } from "../../managers/CategoryManager";
 
 export const NewCategoryForm = () => {
-  const [userInput, setUserInput] = useState({
-    id: 0,
+  const [label, setLabel] = useState({
     label: "",
   });
   const [allCategories, setCategories] = useState([]);
 
   useEffect(() => {
-    getCategories().then((categories) => setCategories(categories));
+    getCategories().then((categories) => {
+      setCategories(categories);
+    });
   }, []);
+
+  const handleCategoryCheck = (userInput) => {
+    if (allCategories.some((c) => c.label === userInput)) {
+      return true;
+    }
+  };
 
   return (
     <>
