@@ -1,8 +1,8 @@
-import { Route, Routes } from "react-router-dom";;
-import { Login } from "../components/auth/Login";;
-import { Register } from "../components/auth/Register";;
+import { Route, Routes } from "react-router-dom";
+import { Login } from "../components/auth/Login";
+import { Register } from "../components/auth/Register";
 import { Authorized } from "./Authorized";
-import { TagList } from "../components/tags/TagList";;
+import { TagList } from "../components/tags/TagList";
 import { CategoryList } from "../components/categories/CategoryList";
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -14,6 +14,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route element={<Authorized token={token} />}>
           {/* Add Routes here */}
           <Route path="/categories" element={<CategoryList />} />
+          <Route path="/tags" element={<TagList />} />
         </Route>
       </Routes>
     </>

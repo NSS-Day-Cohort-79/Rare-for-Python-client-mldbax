@@ -1,17 +1,14 @@
-import { useRef } from "react";;
-import { Link, useNavigate } from "react-router-dom";;
-import "./NavBar.css";;
-import Logo from "./rare.jpeg";;
+import { useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./NavBar.css";
+import Logo from "./rare.jpeg";
 
 export const NavBar = ({ token, setToken }) => {
-  const navigate = useNavigate();;
-  const navbar = useRef();;
-  const hamburger = useRef();;
+  const navigate = useNavigate();
+  const navbar = useRef();
+  const hamburger = useRef();
 
   const showMobileNavbar = () => {
-    hamburger.current.classList.toggle("is-active");
-    navbar.current.classList.toggle("is-active");
-  };
     hamburger.current.classList.toggle("is-active");
     navbar.current.classList.toggle("is-active");
   };
@@ -66,6 +63,9 @@ export const NavBar = ({ token, setToken }) => {
               </Link>
               <Link to="/categories" className="navbar-item">
                 Category Management
+              </Link>
+              <Link to="/tags" className="navbar-item">
+                Tag Management
               </Link>
             </>
           ) : (
