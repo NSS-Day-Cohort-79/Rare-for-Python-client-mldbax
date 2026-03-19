@@ -1,8 +1,7 @@
-import { Route, Routes } from "react-router-dom";;
-import { Login } from "../components/auth/Login";;
-import { Register } from "../components/auth/Register";;
+import { Route, Routes } from "react-router-dom";
+import { Login } from "../components/auth/Login";
+import { Register } from "../components/auth/Register";
 import { Authorized } from "./Authorized";
-import { CategoryList } from "../components/categories/CategoryList";;
 import { CategoryList } from "../components/categories/CategoryList";
 import { PostList } from "../components/posts/PostList";
 
