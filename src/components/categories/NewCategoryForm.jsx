@@ -7,17 +7,22 @@ export const NewCategoryForm = () => {
   });
   const [allCategories, setCategories] = useState([]);
 
+  // get list of current categories
   useEffect(() => {
     getCategories().then((categories) => {
       setCategories(categories);
     });
   }, []);
 
-  const handleCategoryCheck = (userInput) => {
-    if (allCategories.some((c) => c.label === userInput)) {
-      return true;
-    }
-  };
+  // check if user input already exists in category list
+
+  //   const handleCategoryCheck = (userInput) => {
+  //     if (allCategories.some((c) => c.label === userInput)) {
+  //       return true;
+  //     }
+  //   };
+
+  // handleSaveCategory, call handle category check function, if false, api call, if true, return error
 
   return (
     <>
@@ -31,6 +36,7 @@ export const NewCategoryForm = () => {
             </div>
           </div>
           <div class="field">
+            {/* create onClick save category in button */}
             <button class="button is-link" label="Submit">
               Submit
             </button>
