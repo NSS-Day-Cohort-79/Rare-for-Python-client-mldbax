@@ -2,8 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import { Login } from "../components/auth/Login";
 import { Register } from "../components/auth/Register";
 import { Authorized } from "./Authorized";
+import { TagList } from "../components/tags/TagList";
 import { CategoryList } from "../components/categories/CategoryList";
 import { NewCategoryForm } from "../components/categories/NewCategoryForm";
+import { CreateTag } from "../components/tags/CreateTag";
 import { PostList } from "../components/posts/PostList";
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -19,6 +21,10 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route path=":new" element={<NewCategoryForm />} />
           </Route>
           <Route path="/posts" element={<PostList />} />
+          <Route path="/tags">
+            <Route index element={<TagList />} />
+            <Route path="new" element={<CreateTag />} />
+          </Route>
         </Route>
       </Routes>
     </>

@@ -15,25 +15,38 @@ export const NavBar = ({ token, setToken }) => {
 
   return (
     <nav
+     
       className="navbar is-success mb-3"
+     
       role="navigation"
+     
       aria-label="main navigation"
+    
     >
       <div className="navbar-brand">
         <a className="navbar-item" href="/">
           <img src={Logo} height="3rem" alt="Rare Logo" />{" "}
+         {" "}
           <h1 className="title is-4">Rare Publishing</h1>
         </a>
 
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a
+         
           role="button"
+         
           className="navbar-burger"
+         
           aria-label="menu"
+         
           aria-expanded="false"
+         
           data-target="navbarBasicExample"
+         
           onClick={showMobileNavbar}
+         
           ref={hamburger}
+        
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -50,6 +63,9 @@ export const NavBar = ({ token, setToken }) => {
               </Link>
               <Link to="/categories" className="navbar-item">
                 Category Management
+              </Link>
+              <Link to="/tags" className="navbar-item">
+                Tag Management
               </Link>
             </>
           ) : (
