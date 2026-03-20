@@ -6,10 +6,16 @@ export const CreateTag = () => {
   const [label, setLabel] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-    createTag({
-      label: label,
-    }).then(() => { navigate(-1) });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (label.trim() === '') {
+      alert('Please input a tag')
+    }
+      else {
+      createTag({
+        label: label,
+      }).then(() => { navigate(-1) });
+    }
   };
 
   return (
