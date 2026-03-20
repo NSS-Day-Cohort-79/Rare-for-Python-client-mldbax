@@ -1,8 +1,0 @@
-{
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "checkJs": true,
-    "skipLibCheck": true
-  },
-  "exclude": ["node_modules", "dist"]
-}
