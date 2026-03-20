@@ -2,7 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import { Login } from "../components/auth/Login";
 import { Register } from "../components/auth/Register";
 import { Authorized } from "./Authorized";
+import { TagList } from "../components/tags/TagList";
 import { CategoryList } from "../components/categories/CategoryList";
+import { CreateTag } from "../components/tags/CreateTag";
 import { PostList } from "../components/posts/PostList";
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -15,6 +17,10 @@ export const ApplicationViews = ({ token, setToken }) => {
           {/* Add Routes here */}
           <Route path="/categories" element={<CategoryList />} />
           <Route path="/posts" element={<PostList />} />
+          <Route path="/tags">
+            <Route index element={<TagList />} />
+            <Route path="new" element={<CreateTag />} />
+          </Route>
         </Route>
       </Routes>
     </>
