@@ -1,7 +1,16 @@
 import { useState } from "react";
+import { createTag } from "../../managers/TagManager";
+import { useNavigate } from "react-router-dom";
 
 export const CreateTag = () => {
   const [label, setLabel] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    createTag({
+      label: label,
+    }).then(() => navigate(-1));
+  };
 
   return (
     <>
@@ -12,6 +21,9 @@ export const CreateTag = () => {
         value={label}
         onChange={(e) => setLabel(e.target.value)}
       />
+      <button className="button" onClick={handleSubmit}>
+        create
+      </button>
     </>
   );
 };
