@@ -9,7 +9,7 @@ export const CreateTag = () => {
   const handleSubmit = () => {
     createTag({
       label: label,
-    }).then(() => navigate(-1));
+    }).then(() => { navigate(-1) });
   };
 
   return (
