@@ -10,12 +10,14 @@ export const ApplicationViews = ({ token, setToken }) => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<NewCategoryForm />} />
         <Route path="/login" element={<Login setToken={setToken} />} />
         <Route path="/register" element={<Register setToken={setToken} />} />
         <Route element={<Authorized token={token} />}>
           {/* Add Routes here */}
-          <Route path="/categories" element={<CategoryList />} />
+          <Route path="categories">
+            <Route index element={<CategoryList />} />
+            <Route path=":new" element={<NewCategoryForm />} />
+          </Route>
           <Route path="/posts" element={<PostList />} />
         </Route>
       </Routes>
