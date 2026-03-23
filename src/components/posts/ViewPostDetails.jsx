@@ -5,7 +5,7 @@ import { getPostById } from "../../managers/PostsManager";
 // ViewPostDetails Component: Fetches and displays a single post's full details
 export const ViewPostDetails = () => {
   // State management for post data, loading, and errors
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { postId } = useParams();
@@ -38,7 +38,7 @@ export const ViewPostDetails = () => {
           <div className="content">
             <h1 className="title is-2">{post.title}</h1>
             <div className="mb-4">
-              <p className="mb-2"><strong>By:</strong> {post.user.first_name} {post.user.last_name}</p>
+              <p className="mb-2"><strong>By:</strong> {post.user?.first_name} {post.user?.last_name}</p>
               <p><strong>Published:</strong> {formattedDate}</p>
             </div>
             <hr />
