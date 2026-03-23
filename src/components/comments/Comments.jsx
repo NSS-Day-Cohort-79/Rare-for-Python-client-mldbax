@@ -3,20 +3,20 @@ import { useParams } from "react-router-dom";
 import { getCommentsByPostId } from "../../managers/CommentsManager";
 
 export const Comments = () => {
-  const { post_id } = useParams();
+  const { postId } = useParams();
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    getCommentsByPostId(post_id).then((c) => {
+    getCommentsByPostId(postId).then((c) => {
       setComments(c);
     });
-  }, [post_id]);
+  }, [postId]);
 
   return (
     <>
       <div className="container">
         <div className="section is-normal">
-            <h1 className="title"></h1>
+          <h1 className="title">{comments[0]?.post?.title}</h1>
         </div>
       </div>
     </>
