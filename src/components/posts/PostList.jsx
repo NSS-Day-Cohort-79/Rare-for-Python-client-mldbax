@@ -28,11 +28,14 @@ export const PostList = () => {
           {allPosts.map((post) => {
             return (
               <div className="card mb-5" key={post.id}>
-                <div className="card-image">
-                  <figure className="image is-4by3">
-                    <img src={post.image_url} alt={post.title} />
-                  </figure>
-                </div>
+                {/* CD - only show image if image_url is populated */}
+                {post.image_url && (
+                  <div className="card-image">
+                    <figure className="image is-4by3">
+                      <img src={post.image_url} alt={post.title} />
+                    </figure>
+                  </div>
+                )}
                 <div className="card-content">
                   <Link to={`/posts/${post.id}`}>
                     <p className="title is-5 mb-2">{post.title}</p>
