@@ -12,6 +12,17 @@ export const PostList = () => {
 
   return (
     <div className="container">
+      {/* CD - Added bar to hold new button on the right of the screen */}
+      <nav className="level">
+        <div className="level-left"></div>
+        <div className="level-right">
+          <p className="level-item">
+            <a className="button is-success" href="/posts/new">
+              New
+            </a>
+          </p>
+        </div>
+      </nav>
       <div className="columns is-centered">
         <div className="column is-half">
           {allPosts.map((post) => {
