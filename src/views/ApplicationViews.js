@@ -8,7 +8,7 @@ import { NewCategoryForm } from "../components/categories/NewCategoryForm";
 import { CreateTag } from "../components/tags/CreateTag";
 import { PostList } from "../components/posts/PostList";
 import { ViewPostDetails } from "../components/posts/ViewPostDetails";
-
+import { Comments } from "../components/comments/Comments";
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
@@ -22,9 +22,10 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route index element={<CategoryList />} />
             <Route path="new" element={<NewCategoryForm />} />
           </Route>
-          <Route path="/posts" >
-           <Route index element={<PostList />} />
-          <Route path=":postId" element={<ViewPostDetails />} /> 
+          <Route path="/posts">
+            <Route index element={<PostList />} />
+            <Route path=":postId" element={<ViewPostDetails />} />
+            <Route path=":postId/comments" element={<Comments />} />
           </Route>
           <Route path="/tags">
             <Route index element={<TagList />} />
