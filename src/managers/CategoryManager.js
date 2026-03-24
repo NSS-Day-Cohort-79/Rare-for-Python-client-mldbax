@@ -7,3 +7,13 @@ export const deleteCategory = (id) => {
     method: "DELETE",
   })
 }
+
+export const createCategory = (label) => {
+  return fetch(`http://localhost:8088/categories`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(label)
+  })
+ }
