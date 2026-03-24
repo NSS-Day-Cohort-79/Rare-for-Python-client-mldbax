@@ -125,10 +125,18 @@ export const EditPost = ({ token }) => {
                 </div>
               </div>
             </div>
-            <div className="field">
-              <button className="button is-link" label="Submit">
-                Submit
-              </button>
+            <div className="buttons">
+              <div className="field">
+                <button className="button is-link" label="Submit">
+                  Submit
+                </button>
+                <button
+                  className="button is-warning"
+                  onClick={() => navigate(-1)}
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </form>
         </div>
