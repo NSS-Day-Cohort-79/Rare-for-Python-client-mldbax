@@ -55,7 +55,7 @@ export const Comments = () => {
                         {comment.author.username}
                       </div>
                       <div className="level-right">
-                        {new Date(comment.created_on).toLocaleDateString()}
+                        {new Date(comment.createdOn).toLocaleDateString()}
                       </div>
                     </div>
                   </div>
