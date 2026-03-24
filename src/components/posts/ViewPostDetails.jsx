@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getPostById } from "../../managers/PostsManager";
 
 // ViewPostDetails Component: Fetches and displays a single post's full details
@@ -9,6 +9,7 @@ export const ViewPostDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { postId } = useParams();
+  const navigate = useNavigate();
 
   // Fetch post data when component mounts or postId changes
   useEffect(() => {
@@ -34,14 +35,28 @@ export const ViewPostDetails = () => {
     <div className="container">
       <div className="columns is-centered">
         <div className="column is-two-thirds">
-          {post.image_url && <figure className="image is-16by9 mb-5"><img src={post.image_url} alt={post.title} /></figure>}
+          {post.image_url && (
+            <figure className="image is-16by9 mb-5">
+              <img src={post.image_url} alt={post.title} />
+            </figure>
+          )}
           <div className="content">
             <h1 className="title is-2">{post.title}</h1>
             <div className="mb-4">
-              <p className="mb-2"><strong>By:</strong> {post.user.first_name} {post.user.last_name}</p>
-              <p><strong>Published:</strong> {formattedDate}</p>
+              <p className="mb-2">
+                <strong>By:</strong> {post.user.first_name}{" "}
+                {post.user.last_name}
+              </p>
+              <p>
+                <strong>Published:</strong> {formattedDate}
+              </p>
             </div>
-            <hr />
+            <button
+              className="block button is-link is-small"
+              onClick={() => navigate(`comments`)}
+            >
+              View Comments
+            </button>
             <div className="post-content">{post.content}</div>
           </div>
         </div>
