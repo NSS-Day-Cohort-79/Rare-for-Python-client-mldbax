@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCategories } from "../../managers/CategoryManager";
+import { deleteCategory, getCategories } from "../../managers/CategoryManager";
 import { Link } from "react-router-dom";
 
 export const CategoryList = () => {
@@ -11,24 +11,38 @@ export const CategoryList = () => {
     });
   }, []);
 
+  // handle delete passing category id add alert to make sure admin wants to delete it
+  const handleDelete = (id) => {
+    const yesDelete = window.confirm("Are you sure you want to delete this category?");
+    if (yesDelete) {
+      deleteCategory(id).then(() => {
+        getCategories().then((categories) => {
+          setCategoryArray(categories)
+        })
+      })
+    }
+  }
+
   return (
     <>
-      <div class="container">
-        <div class="section is-normal">
-          <h1 class="title">Categories</h1>
+      <div className="container">
+        <div className="section is-normal">
+          <h1 className="title">Categories</h1>
           {/* add link for Create New Category, route to /new */}
-          <Link>Create New Category</Link>
+          <Link to="new" className="has-text-primary">Create New Category</Link>
           {categoryArray.map((category) => {
             return (
-              <div class="tags has-addons are-medium" key={category.id}>
-                <a class="tag is-primary is-hoverable" href="/">
+              <div className="tags has-addons are-medium" key={category.id}>
+                <a className="tag is-primary is-hoverable" href="/">
                   {category.label}
                 </a>
-                <a class="tag is-light" href="/">
+                <a className="tag is-light" href="/">
                   &#9881;
                 </a>
-                <a class="tag is-delete" href="/">
-                  {" "}
+                <a className="tag is-delete" href="/" onClick={(e) => {
+                  e.preventDefault()
+                  handleDelete(category.id)
+                }}>
                 </a>
               </div>
             );
@@ -37,4 +51,4 @@ export const CategoryList = () => {
       </div>
     </>
   );
-};
+}
