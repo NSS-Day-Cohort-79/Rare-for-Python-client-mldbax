@@ -26,14 +26,20 @@ export const CategoryList = () => {
   return (
     <>
       <div className="container">
+          {/* add link for Create New Category, route to /new */}
+           <nav className="level">
+            <div className="level-left"></div>
+            <div className="level-right">
+              <p className="level-item"></p>
+              <a className="button is-success" href="categories/new">Create Category</a>
+            </div>
+            </nav>
         <div className="section is-normal">
           <h1 className="title">Categories</h1>
-          {/* add link for Create New Category, route to /new */}
-          <Link to="new" className="has-text-primary">Create New Category</Link>
           {categoryArray.map((category) => {
             return (
               <div className="tags has-addons are-medium" key={category.id}>
-                <a className="tag is-primary is-hoverable" href="/">
+                <a className="tag is-info is-hoverable" href="/">
                   {category.label}
                 </a>
                 <a className="tag is-light" href="/">
