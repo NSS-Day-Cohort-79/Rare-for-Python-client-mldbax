@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { deleteCategory, getCategories } from "../../managers/CategoryManager";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const CategoryList = () => {
   const [categoryArray, setCategoryArray] = useState([]);
-  const navigate = useNavigate()
-  const { id } = useParams()
 
   useEffect(() => {
     getCategories().then((categories) => {
@@ -14,12 +12,16 @@ export const CategoryList = () => {
   }, []);
 
   // handle delete passing category id add alert to make sure admin wants to delete it
-  const handleDelete = () => {
-    alert("Are you sure you want to delete this category?")
-    deleteCategory(id).then(() => {
-      navigate("/categories")
-     })
-   }
+  const handleDelete = (id) => {
+    const yesDelete = window.confirm("Are you sure you want to delete this category?");
+    if (yesDelete) {
+      deleteCategory(id).then(() => {
+        getCategories().then((categories) => {
+          setCategoryArray(categories)
+        })
+      })
+    }
+  }
 
   return (
     <>
@@ -37,7 +39,10 @@ export const CategoryList = () => {
                 <a className="tag is-light" href="/">
                   &#9881;
                 </a>
-                <a className="tag is-delete" href="/" onClick={handleDelete}>
+                <a className="tag is-delete" href="/" onClick={(e) => {
+                  e.preventDefault()
+                  handleDelete(category.id)
+                }}>
                 </a>
               </div>
             );
@@ -46,4 +51,4 @@ export const CategoryList = () => {
       </div>
     </>
   );
-};
+}
