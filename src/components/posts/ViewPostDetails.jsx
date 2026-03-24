@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getPostById } from "../../managers/PostsManager";
 
 // ViewPostDetails Component: Fetches and displays a single post's full details
-export const ViewPostDetails = () => {
+export const ViewPostDetails = ({ token }) => {
   // State management for post data, loading, and errors
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(true);
@@ -29,23 +29,38 @@ export const ViewPostDetails = () => {
   if (!post) return <p>Post not found</p>;
 
   // Format the publication date to MM/DD/YYYY
-  const formattedDate = new Date(post.publication_date).toLocaleDateString();
+  const formattedDate = new Date(post.publicationDate).toLocaleDateString();
 
   return (
-    <div className="container">
+    <div className="container mt-6">
+      {/* CD - Added bar to hold edit button, title, and category */}
+      <nav className="level">
+        <div className="level-left">
+          {parseInt(token) === post.userId ? (
+            <a className="button is-success" href={`/posts/${postId}/edit`}>
+              Edit
+            </a>
+          ) : (
+            <></>
+          )}
+        </div>
+        <h1 className="title level-item is-2">{post.title}</h1>
+        <div className="level-right">
+          <p className="level-item">{post.category.label}</p>
+        </div>
+      </nav>
+
       <div className="columns is-centered">
         <div className="column is-two-thirds">
-          {post.image_url && (
+          {post.imageUrl && (
             <figure className="image is-16by9 mb-5">
-              <img src={post.image_url} alt={post.title} />
+              <img src={post.imageUrl} alt={post.title} />
             </figure>
           )}
           <div className="content">
-            <h1 className="title is-2">{post.title}</h1>
             <div className="mb-4">
               <p className="mb-2">
-                <strong>By:</strong> {post.user.first_name}{" "}
-                {post.user.last_name}
+                <strong>By:</strong> {post.user.firstName} {post.user.lastName}
               </p>
               <p>
                 <strong>Published:</strong> {formattedDate}
