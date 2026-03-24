@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getPostById } from "../../managers/PostsManager";
 
 // ViewPostDetails Component: Fetches and displays a single post's full details
-export const ViewPostDetails = () => {
+export const ViewPostDetails = ({ token }) => {
   // State management for post data, loading, and errors
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(true);
@@ -36,9 +36,13 @@ export const ViewPostDetails = () => {
       {/* CD - Added bar to hold edit button, title, and category */}
       <nav className="level">
         <div className="level-left">
-          <a className="button is-success" href={`/posts/${postId}/edit`}>
-            Edit
-          </a>
+          {parseInt(token) === post.userId ? (
+            <a className="button is-success" href={`/posts/${postId}/edit`}>
+              Edit
+            </a>
+          ) : (
+            <></>
+          )}
         </div>
         <h1 className="title level-item is-2">{post.title}</h1>
         <div className="level-right">
