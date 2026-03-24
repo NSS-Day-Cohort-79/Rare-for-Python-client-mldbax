@@ -8,12 +8,12 @@ export const deleteCategory = (id) => {
   })
 }
 
-export const createCategory = (newCategory) => {
+export const createCategory = (label) => {
   return fetch(`http://localhost:8088/categories`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(newCategory)
+    body: JSON.stringify(label)
   })
  }
