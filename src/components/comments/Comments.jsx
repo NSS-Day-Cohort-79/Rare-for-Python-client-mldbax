@@ -9,12 +9,14 @@ export const Comments = () => {
   const [comments, setComments] = useState([]);
   const [post, setPost] = useState({});
 
+  // get comments using postId from db, add them to array
   useEffect(() => {
     getCommentsByPostId(postId).then((c) => {
       setComments(c);
     });
   }, [postId]);
 
+  // get post title from postId, in case there are no comments
   useEffect(() => {
     getPostById(postId).then((p) => {
       setPost(p);
