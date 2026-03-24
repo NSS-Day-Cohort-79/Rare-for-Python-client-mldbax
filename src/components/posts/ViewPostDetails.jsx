@@ -56,8 +56,7 @@ export const ViewPostDetails = () => {
           <div className="content">
             <div className="mb-4">
               <p className="mb-2">
-                <strong>By:</strong> {post.user.first_name}{" "}
-                {post.user.last_name}
+                <strong>By:</strong> {post.user.firstName} {post.user.lastName}
               </p>
               <p>
                 <strong>Published:</strong> {formattedDate}
