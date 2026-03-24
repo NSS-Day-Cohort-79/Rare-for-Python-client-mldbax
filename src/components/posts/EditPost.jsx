@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { getCategories } from "../../managers/CategoryManager";
-import { createPost, getPostById } from "../../managers/PostsManager";
+import {
+  createPost,
+  getPostById,
+  updatePost,
+} from "../../managers/PostsManager";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const EditPost = ({ token }) => {
@@ -47,12 +51,7 @@ export const EditPost = ({ token }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (postInfo.categoryId > 0) {
-      let copy = { ...postInfo, userId: parseInt(token) };
-      createPost(copy).then((res) => navigate(`/posts/${res.id}`));
-    } else {
-      alert("Please pick a category");
-    }
+    updatePost(postInfo).then(() => navigate(-1));
   };
 
   return (

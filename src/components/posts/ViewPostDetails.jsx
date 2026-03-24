@@ -62,13 +62,6 @@ export const ViewPostDetails = () => {
               <p>
                 <strong>Published:</strong> {formattedDate}
               </p>
-              <p className="mb-2">
-                <strong>By:</strong> {post.user.first_name}{" "}
-                {post.user.last_name}
-              </p>
-              <p>
-                <strong>Published:</strong> {formattedDate}
-              </p>
             </div>
             <button
               className="block button is-link is-small"
