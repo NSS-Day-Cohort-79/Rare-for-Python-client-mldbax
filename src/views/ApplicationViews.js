@@ -8,6 +8,7 @@ import { NewCategoryForm } from "../components/categories/NewCategoryForm";
 import { CreateTag } from "../components/tags/CreateTag";
 import { PostList } from "../components/posts/PostList";
 import { ViewPostDetails } from "../components/posts/ViewPostDetails";
+import { Comments } from "../components/comments/Comments";
 import { CreatePost } from "../components/posts/CreatePost";
 import { EditPost } from "../components/posts/EditPost";
 
@@ -19,7 +20,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/register" element={<Register setToken={setToken} />} />
         <Route element={<Authorized token={token} />}>
           {/* Add Routes here */}
-          <Route path="categories">
+          <Route path="/categories">
             <Route index element={<CategoryList />} />
             <Route path="new" element={<NewCategoryForm />} />
           </Route>
@@ -28,6 +29,7 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route path=":postId">
               <Route index element={<ViewPostDetails />} />
               <Route path="edit" element={<EditPost token={token} />} />
+              <Route path="comments" element={<Comments/>} />
             </Route>
             <Route path="new" element={<CreatePost token={token} />} />
           </Route>
