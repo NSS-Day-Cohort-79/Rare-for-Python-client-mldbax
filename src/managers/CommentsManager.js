@@ -1,5 +1,5 @@
-export const getCommentsByPostId = (post_id) => {
-  return fetch(`http://localhost:8088/comments/${post_id}`).then((res) =>
+export const getCommentsByPostId = (postId) => {
+  return fetch(`http://localhost:8088/comments/${postId}`).then((res) =>
     res.json(),
   );
 };
