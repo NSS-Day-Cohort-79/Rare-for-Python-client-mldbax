@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { createComment } from "../../managers/CommentsManager";
 
 export const NewCommentForm = ({ token }) => {
   const { postId } = useParams();
@@ -17,7 +18,14 @@ export const NewCommentForm = ({ token }) => {
     copy[id] = e.target.value;
     setComment(copy);
   };
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (comment.subject !== "" && comment.content !== "") {
+      createComment(comment).then((res) => navigate(-1));
+    } else {
+      alert("Please complete all fields");
+    }
+  };
 
   return (
     <>
@@ -37,8 +45,9 @@ export const NewCommentForm = ({ token }) => {
             </div>
             <div className="block field">
               <label className="label">Comment</label>
-              <input
-                className="input"
+              <textarea
+                className="textarea"
+                rows="5"
                 type="text"
                 id="content"
                 required
@@ -49,7 +58,7 @@ export const NewCommentForm = ({ token }) => {
               <button
                 className="button is-link"
                 label="Submit"
-                // onClick={handleSubmit}
+                onClick={handleSubmit}
               >
                 Submit
               </button>
@@ -58,7 +67,7 @@ export const NewCommentForm = ({ token }) => {
               <button
                 className="button is-warning"
                 label="Cancel"
-                // onClick={navigate(-1)}
+                onClick={() => navigate(-1)}
               >
                 Cancel
               </button>
