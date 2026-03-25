@@ -61,6 +61,15 @@ export const EditCategory = () => {
             >
               Submit
             </button>
+            <button
+              className="button is-warning ml-3"
+              label="Cancel"
+              onClick={() => {
+                navigate(-1);
+               }}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </div>
