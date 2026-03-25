@@ -8,7 +8,9 @@ import { NewCategoryForm } from "../components/categories/NewCategoryForm";
 import { CreateTag } from "../components/tags/CreateTag";
 import { PostList } from "../components/posts/PostList";
 import { ViewPostDetails } from "../components/posts/ViewPostDetails";
+import { Comments } from "../components/comments/Comments";
 import { CreatePost } from "../components/posts/CreatePost";
+import { EditPost } from "../components/posts/EditPost";
 import { MyPosts } from "../components/posts/MyPosts";
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -20,7 +22,7 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route element={<Authorized token={token} />}>
           {/* Add Routes here */}
           {/* Categories Routes */}
-          <Route path="categories">
+          <Route path="/categories">
             <Route index element={<CategoryList />} />
             <Route path="new" element={<NewCategoryForm />} />
           </Route>
@@ -28,10 +30,14 @@ export const ApplicationViews = ({ token, setToken }) => {
           {/* Posts Routes */}
           <Route path="posts">
             <Route index element={<PostList />} />
-            <Route path=":postId" element={<ViewPostDetails />} />
-            <Route path="my-posts" element={<MyPosts token={token} />} />
+            <Route path=":postId">
+              <Route index element={<ViewPostDetails token={token} />} />
+              <Route path="edit" element={<EditPost token={token} />} />
+              <Route path="comments" element={<Comments />} />
+            </Route>
             <Route path="new" element={<CreatePost token={token} />} />
           </Route>
+            <Route path="/my-posts" element={<MyPosts token={token} />} />
 
           {/* Tags Routes */}
           <Route path="tags">

@@ -10,3 +10,9 @@ export const createTag = (body) => {
     body: JSON.stringify(body),
   })
 }
+
+export const deleteTag = (id) => { 
+  return fetch(`http://localhost:8088/tags/${id}`, {
+    method: "DELETE",
+  })
+}

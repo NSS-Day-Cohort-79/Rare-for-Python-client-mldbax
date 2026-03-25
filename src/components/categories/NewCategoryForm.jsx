@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { getCategories } from "../../managers/CategoryManager";
+import { createCategory, getCategories } from "../../managers/CategoryManager";
+import { useNavigate } from "react-router-dom";
 
 export const NewCategoryForm = () => {
-  const [label, setLabel] = useState({
-    label: "",
-  });
+  const [label, setLabel] = useState("");
   const [allCategories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   // get list of current categories
   useEffect(() => {
@@ -16,28 +16,50 @@ export const NewCategoryForm = () => {
 
   // check if user input already exists in category list
 
-  //   const handleCategoryCheck = (userInput) => {
-  //     if (allCategories.some((c) => c.label === userInput)) {
-  //       return true;
-  //     }
-  //   };
+  const handleCategoryCheck = (userInput) => {
+    if (allCategories.some((c) => c.label === userInput)) {
+      return true;
+    }
+  };
 
   // handleSaveCategory, call handle category check function, if false, api call, if true, return error
+  const handleSaveCategory = (e) => {
+    e.preventDefault();
+    if (label.trim() === "") {
+      alert("Please input a category");
+    } else if (handleCategoryCheck(label)) {
+      alert("Category already exists");
+    } else {
+      createCategory({ label: label }).then(() => {
+        navigate(-1);
+      });
+    }
+  };
 
   return (
     <>
-      <div class="container">
-        <div class="section is-normal">
-          <h1 class="title">Create New Category</h1>
-          <div class="field">
-            <label class="label">Category Name</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="Category" />
+      <div className="container">
+        <div className="section is-normal">
+          <h1 className="title">Create New Category</h1>
+          <div className="field">
+            <label className="label">Category Name</label>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                placeholder="Category"
+                value={label}
+                onChange={(e) => setLabel(e.target.value)}
+              />
             </div>
           </div>
-          <div class="field">
+          <div className="field">
             {/* create onClick save category in button */}
-            <button class="button is-link" label="Submit">
+            <button
+              className="button is-link"
+              label="Submit"
+              onClick={handleSaveCategory}
+            >
               Submit
             </button>
           </div>
