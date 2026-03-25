@@ -11,6 +11,7 @@ import { ViewPostDetails } from "../components/posts/ViewPostDetails";
 import { Comments } from "../components/comments/Comments";
 import { CreatePost } from "../components/posts/CreatePost";
 import { EditPost } from "../components/posts/EditPost";
+import { EditCategory } from "../components/categories/EditCategory";
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
@@ -23,6 +24,7 @@ export const ApplicationViews = ({ token, setToken }) => {
           <Route path="/categories">
             <Route index element={<CategoryList />} />
             <Route path="new" element={<NewCategoryForm />} />
+            <Route path="edit" element={<EditCategory />} />
           </Route>
           <Route path="/posts">
             <Route index element={<PostList />} />
