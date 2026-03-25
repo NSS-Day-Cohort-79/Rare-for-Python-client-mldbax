@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 export const CategoryList = () => {
   const [categoryArray, setCategoryArray] = useState([]);
+ 
 
   useEffect(() => {
     getCategories().then((categories) => {
@@ -42,9 +43,9 @@ export const CategoryList = () => {
                 <a className="tag is-info is-hoverable" href="/">
                   {category.label}
                 </a>
-                <a className="tag is-light" href="/">
+                <Link className="tag is-light" to={`/${category.id}/edit`} href="/">
                   &#9881;
-                </a>
+                </Link>
                 <a className="tag is-delete" href="/" onClick={(e) => {
                   e.preventDefault()
                   handleDelete(category.id)
