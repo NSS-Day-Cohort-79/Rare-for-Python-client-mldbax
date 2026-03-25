@@ -30,10 +30,16 @@ export const createPost = (body) => {
 
 // Fetch all posts authored by a specific user
 export const getUserPosts = (userId) => {
-  return fetch(`http://localhost:8088/posts/user/${userId}`).then((res) => {
-    const data = res.json();
-    return data;
-  });
+  return fetch(`http://localhost:8088/posts/user/${userId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      // The backend returns a JSON string, so we need to parse it again if it's a string
+      if (typeof data === 'string') {
+        return JSON.parse(data);
+      }
+      return data;
+    });
+
 };
 
 // Delete a post by its ID
