@@ -3,3 +3,13 @@ export const getCommentsByPostId = (postId) => {
     res.json(),
   );
 };
+
+export const createComment = (body) => {
+  return fetch(`http://localhost:8088/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  }).then((res) => res.json());
+};
