@@ -25,7 +25,7 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route index element={<CategoryList />} />
             <Route path="new" element={<NewCategoryForm />} />
           </Route>
-          <Route path=":categoryId">
+          <Route path=":id">
               <Route path="edit" element={<EditCategory />} />
           </Route>
           <Route path="/posts">
