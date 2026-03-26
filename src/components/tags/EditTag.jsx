@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getCategoryById, updateCategory } from "../../managers/CategoryManager";
 import { useNavigate, useParams } from "react-router-dom";
+import { getTagById, updateTag } from "../../managers/TagManager";
 
-export const EditCategory = () => {
+export const EditTag = () => {
   const [editedTag, setEditedTag] = useState({}) 
   const { id } = useParams()
   const navigate = useNavigate()
@@ -17,17 +17,17 @@ export const EditCategory = () => {
   //handle input change
   const handleChange = (event) => {
     const { name, value, type } = event.target;
-    const copy = { ...editedCategory };
+    const copy = { ...editedTag };
     if (type === "text") {
       copy[name] = value
     }
-    setEditedCategory(copy)
+    setEditedTag(copy)
    }
 
   //handle updated category and navigate back to category list
-  const handleUpdateCategory = () => {
-    updateCategory(id, editedCategory).then(() => {
-      navigate(`/categories`)
+  const handleUpdateTag = () => {
+    updateTag(id, editedTag).then(() => {
+      navigate(`/tags`)
      })
    } 
 
@@ -35,14 +35,14 @@ export const EditCategory = () => {
     <>
       <div className="container">
         <div className="section is-normal">
-          <h1 className="title">Edit Category</h1>
+          <h1 className="title">Edit Tag</h1>
           <div className="field">
-            <label className="label">Category Name</label>
+            <label className="label">Tag Name</label>
             <div className="control">
               <input
                 name="label"
                 type="text"
-                value={editedCategory?.label || ""}
+                value={editedTag?.label || ""}
                 onChange={handleChange}
                 required
                 className="input"
@@ -55,7 +55,7 @@ export const EditCategory = () => {
               className="button is-link"
               label="Submit"
               onClick={() => {
-                handleUpdateCategory();
+                handleUpdateTag();
                }}
             >
               Submit
