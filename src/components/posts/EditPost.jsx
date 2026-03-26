@@ -6,6 +6,7 @@ import {
   updatePost,
 } from "../../managers/PostsManager";
 import { useNavigate, useParams } from "react-router-dom";
+import { getAllTags } from "../../managers/TagManager";
 
 export const EditPost = ({ token }) => {
   const [postInfo, setPostInfo] = useState({
@@ -16,18 +17,25 @@ export const EditPost = ({ token }) => {
     content: "",
   });
   const [allCategories, setAllCategories] = useState([]);
+  const [allTags, setAllTags] = useState([]);
+  const [availableTags, setAvailableTags] = useState([]);
+  const [newTags, setNewTags] = useState([]);
 
   const navigate = useNavigate();
 
   const { postId } = useParams();
 
   useEffect(() => {
-    // TODO check if post belongs to current user?
     getPostById(postId).then((postObj) => {
       if (postObj.userId === parseInt(token)) {
         delete postObj.category;
         delete postObj.user;
         setPostInfo(postObj);
+        let currentTags = [];
+        postObj.tags.forEach((postTag) => {
+          currentTags.push(postTag.tag);
+        });
+        setNewTags(currentTags);
       } else {
         navigate(-1);
       }
@@ -36,7 +44,19 @@ export const EditPost = ({ token }) => {
 
   useEffect(() => {
     getCategories().then(setAllCategories);
+    getAllTags().then(setAllTags);
   }, []);
+
+  useEffect(() => {
+    updateTags();
+  }, [allTags, newTags]);
+
+  const updateTags = () => {
+    const filteredTags = allTags.filter(
+      (tag) => !newTags.some((newTag) => newTag.id === tag.id),
+    );
+    setAvailableTags(filteredTags);
+  };
 
   const handleChange = (e) => {
     let copy = { ...postInfo };
@@ -47,6 +67,15 @@ export const EditPost = ({ token }) => {
       copy[id] = e.target.value;
     }
     setPostInfo(copy);
+  };
+
+  const addTag = (e) => {
+    let copy = structuredClone(newTags);
+    const tagObj = availableTags.find(
+      (tag) => tag.id === parseInt(e.target.value),
+    );
+    copy.push(tagObj);
+    setNewTags(copy);
   };
 
   const handleSubmit = (e) => {
@@ -118,6 +147,34 @@ export const EditPost = ({ token }) => {
                       return (
                         <option key={category.id} value={category.id}>
                           {category.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="field">
+              <label className="label">Tags</label>
+              <div className="tags">
+                {newTags.map((tag) => {
+                  return (
+                    <div className="tag is-info" key={tag.id}>
+                      {tag.label}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="control">
+                <div className="select">
+                  <select id="TagId" onChange={addTag} value={0} required>
+                    <option hidden value={0}>
+                      Add Tag
+                    </option>
+                    {availableTags.map((tag) => {
+                      return (
+                        <option key={tag.id} value={tag.id}>
+                          {tag.label}
                         </option>
                       );
                     })}
