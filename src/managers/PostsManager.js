@@ -32,12 +32,7 @@ export const getPostById = (postId) => {
 export const getUserPosts = (userId) => {
   return fetch(`http://localhost:8088/user-posts/${userId}`)
     .then((res) => res.json())
-    .then((data) => {
-      if (typeof data === 'string') {
-        return JSON.parse(data);
-      }
-      return data;
-    });
+    
 };
 
 // Delete a post by its ID
