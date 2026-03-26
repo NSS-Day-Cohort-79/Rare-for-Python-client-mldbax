@@ -56,7 +56,6 @@ export const CategoryList = () => {
                 <Link
                   aria-label="edit category"
                   className="tag is-delete"
-                  href="/"
                   onClick={(e) => {
                     e.preventDefault();
                     handleDelete(category.id);

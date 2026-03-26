@@ -50,7 +50,6 @@ export const TagList = () => {
                   <Link
                     aria-label="edit tag"
                     className="tag is-delete"
-                    href="/"
                     onClick={(e) => {
                       e.preventDefault();
                       handleDelete(tag.id);
