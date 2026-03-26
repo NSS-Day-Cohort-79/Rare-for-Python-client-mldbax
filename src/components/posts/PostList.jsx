@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getApprovedPosts } from "../../managers/PostsManager";
 import { Link } from "react-router-dom";
-
 export const PostList = () => {
   const [allPosts, setAllPosts] = useState([]);
 
@@ -11,6 +10,7 @@ export const PostList = () => {
   }, []);
 
   return (
+    <main className="pt-5">
     <div className="container">
       {/* CD - Added bar to hold new button on the right of the screen */}
       <nav className="level">
@@ -23,11 +23,11 @@ export const PostList = () => {
           </p>
         </div>
       </nav>
-      <div className="columns is-centered">
-        <div className="column is-half">
+      <div className="columns is-multiline">
           {allPosts.map((post) => {
             return (
-              <div className="card mb-5" key={post.id}>
+              <div className="column is-half is-flex is-align-items-stretch equal-height">
+              <div className="card is-flex is-flex-direction-column equal-height" key={post.id}>
                 {/* CD - only show image if image_url is populated */}
                 {post.imageUrl && (
                   <div className="card-image">
@@ -36,20 +36,21 @@ export const PostList = () => {
                     </figure>
                   </div>
                 )}
-                <div className="card-content">
+                <div className="card-content is-flex-grow-1">
                   <Link to={`/posts/${post.id}`}>
-                    <p className="title is-5 mb-2">{post.title}</p>
+                    <p className="title is-5 mb-2 post-title">{post.title}</p>
                   </Link>
                   <p className="mb-5">
                     Author: {post?.user.firstName} {post?.user.lastName}
                   </p>
                   <span className="tag is-primary">{post?.category.label}</span>
                 </div>
-              </div>
+                </div>
+                </div>
             );
           })}
         </div>
       </div>
-    </div>
+      </main>
   );
 };
