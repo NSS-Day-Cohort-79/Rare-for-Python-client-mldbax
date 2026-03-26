@@ -27,7 +27,7 @@ export const CreateTag = () => {
     if (label.trim() === "") {
       alert("Please input a tag");
     } else if (handleTagCheck(label)) {
-      alert("Category already exists");
+      alert("Tag already exists");
     } else {
       createTag({
         label: label,
