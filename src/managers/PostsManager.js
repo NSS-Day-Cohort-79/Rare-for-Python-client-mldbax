@@ -10,12 +10,6 @@ export const getApprovedPosts = () => {
   );
 };
 
-// Fetch a single post by its ID
-export const getPostById = (postId) => {
-  return fetch(`http://localhost:8088/posts/${postId}`).then((res) =>
-    res.json(),
-  );
-};
 
 // Create a new post
 export const createPost = (body) => {
@@ -28,18 +22,22 @@ export const createPost = (body) => {
   }).then((res) => res.json());
 };
 
+// Fetch a single post by its ID
+export const getPostById = (postId) => {
+  return fetch(`http://localhost:8088/posts/${postId}`).then((res) =>
+    res.json(),
+  );
+};
 // Fetch all posts authored by a specific user
 export const getUserPosts = (userId) => {
-  return fetch(`http://localhost:8088/posts/user/${userId}`)
+  return fetch(`http://localhost:8088/user-posts/${userId}`)
     .then((res) => res.json())
     .then((data) => {
-      // The backend returns a JSON string, so we need to parse it again if it's a string
       if (typeof data === 'string') {
         return JSON.parse(data);
       }
       return data;
     });
-
 };
 
 // Delete a post by its ID
