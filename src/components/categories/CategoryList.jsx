@@ -43,12 +43,12 @@ export const CategoryList = () => {
           {categoryArray.map((category) => {
             return (
               <div className="tags has-addons are-medium" key={category.id}>
-                <a className="tag is-info is-hoverable" href="/">
+                <div className="tag is-info" href="/">
                   {category.label}
-                </a>
+                </div>
                 <Link
                   className="tag is-light"
-                  to={`/${category.id}/edit`}
+                  to={`${category.id}/edit`}
                   href="/"
                 >
                   &#9881;

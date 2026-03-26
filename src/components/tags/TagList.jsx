@@ -41,10 +41,12 @@ export const TagList = () => {
             {allTags.map((tag) => {
               return (
                 <div className="tags has-addons are-medium" key={tag.id}>
-                  <a className="tag is-info is-hoverable" href="/">
-                    {tag.label}
-                  </a>
-                  <Link className="tag is-light" to={`${tag.id}/edit`} href="/">
+                  <div className="tag is-info">{tag.label}</div>
+                  <Link
+                    className="tag is-light"
+                    to={`${tag.id}/edit`}
+                    href="/"
+                  >
                     &#9881;
                   </Link>
                   <Link
