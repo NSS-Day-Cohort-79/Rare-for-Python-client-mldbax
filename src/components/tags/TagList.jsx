@@ -46,7 +46,7 @@ export const TagList = () => {
                   </a>
                   <Link
                     className="tag is-light"
-                    to={`/${tag.id}/edit`}
+                    to={`${tag.id}/edit`}
                     href="/"
                   >
                     &#9881;
