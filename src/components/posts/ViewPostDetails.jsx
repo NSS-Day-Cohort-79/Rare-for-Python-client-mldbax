@@ -5,9 +5,7 @@ import { getPostById } from "../../managers/PostsManager";
 // ViewPostDetails Component: Fetches and displays a single post's full details
 export const ViewPostDetails = ({ token }) => {
   // State management for post data, loading, and errors
-  const [post, setPost] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [post, setPost] = useState(null);
   const { postId } = useParams();
   const navigate = useNavigate();
 
@@ -15,21 +13,13 @@ export const ViewPostDetails = ({ token }) => {
   useEffect(() => {
     getPostById(postId)
       .then(setPost)
-      .catch((err) => setError(err))
-      .finally(() => setLoading(false));
+      
   }, [postId]);
+   // Format the publication date to MM/DD/YYYY
+  if (post){
 
-  // Handle loading state
-  if (loading) return <p>Loading post...</p>;
-
-  // Handle error state
-  if (error) return <p>Error loading post: {error.message}</p>;
-
-  // Handle post not found
-  if (!post) return <p>Post not found</p>;
-
-  // Format the publication date to MM/DD/YYYY
-  const formattedDate = new Date(post.publicationDate).toLocaleDateString();
+  
+   const formattedDate = new Date(post.publicationDate).toLocaleDateString();
 
   return (
     <div className="container mt-6">
@@ -46,7 +36,7 @@ export const ViewPostDetails = ({ token }) => {
         </div>
         <h1 className="title level-item is-2">{post.title}</h1>
         <div className="level-right">
-          <p className="level-item">{post.category.label}</p>
+          <p className="level-item">{post?.category.label}</p>
         </div>
       </nav>
 
@@ -60,7 +50,7 @@ export const ViewPostDetails = ({ token }) => {
           <div className="content">
             <div className="mb-4">
               <p className="mb-2">
-                <strong>By:</strong> {post.user.firstName} {post.user.lastName}
+                <strong>By:</strong> {post?.user.firstName} {post.user?.lastName}
               </p>
               <p>
                 <strong>Published:</strong> {formattedDate}
@@ -87,4 +77,5 @@ export const ViewPostDetails = ({ token }) => {
       </div>
     </div>
   );
+};
 };
