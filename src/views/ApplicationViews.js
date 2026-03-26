@@ -12,6 +12,7 @@ import { Comments } from "../components/comments/Comments";
 import { CreatePost } from "../components/posts/CreatePost";
 import { EditPost } from "../components/posts/EditPost";
 import { EditCategory } from "../components/categories/EditCategory";
+import { NewCommentForm } from "../components/comments/NewCommentForm";
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
@@ -34,6 +35,7 @@ export const ApplicationViews = ({ token, setToken }) => {
               <Route index element={<ViewPostDetails token={token} />} />
               <Route path="edit" element={<EditPost token={token} />} />
               <Route path="comments" element={<Comments />} />
+              <Route path="comments/new" element={<NewCommentForm token={token}/>}/>
             </Route>
             <Route path="new" element={<CreatePost token={token} />} />
           </Route>
