@@ -7,6 +7,7 @@ import {
 } from "../../managers/PostsManager";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAllTags } from "../../managers/TagManager";
+import { createPostTag } from "../../managers/PostTagsManager";
 
 export const EditPost = ({ token }) => {
   const [postInfo, setPostInfo] = useState({
@@ -80,7 +81,20 @@ export const EditPost = ({ token }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updatePost(postInfo).then(() => navigate(-1));
+    updatePost(postInfo).then(() => {
+      // get tags to Add
+      let newPostTags = [];
+      for (const newTag of newTags) {
+        if (!postInfo.tags.some((postTag) => postTag.tagId === newTag.id)) {
+          newPostTags.push({ postId: parseInt(postId), tagId: newTag.id });
+        }
+      }
+      Promise.all(newPostTags.map((postTag) => createPostTag(postTag))).then(
+        () => {
+          navigate(-1);
+        },
+      );
+    });
   };
 
   return (
