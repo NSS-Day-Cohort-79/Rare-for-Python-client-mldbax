@@ -10,7 +10,6 @@ export const EditCategory = () => {
  //fetch category data and populate editedCategory
   useEffect(() => {
     getCategoryById(id).then((catObj) => {
-      console.log(catObj)
       setEditedCategory(catObj)
      })
   }, [id])
