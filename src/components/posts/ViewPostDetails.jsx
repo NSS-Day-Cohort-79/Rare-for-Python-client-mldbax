@@ -64,6 +64,15 @@ export const ViewPostDetails = ({ token }) => {
             </button>
             <div className="post-content">{post.content}</div>
           </div>
+          <div className="tags">
+            {post.tags.map((postTag) => {
+              return (
+                <div className="tag is-info" key={postTag.id}>
+                  {postTag.tag.label}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

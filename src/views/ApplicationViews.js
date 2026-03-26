@@ -11,6 +11,8 @@ import { ViewPostDetails } from "../components/posts/ViewPostDetails";
 import { Comments } from "../components/comments/Comments";
 import { CreatePost } from "../components/posts/CreatePost";
 import { EditPost } from "../components/posts/EditPost";
+import { EditCategory } from "../components/categories/EditCategory";
+import { NewCommentForm } from "../components/comments/NewCommentForm";
 import { MyPosts } from "../components/posts/MyPosts";
 
 export const ApplicationViews = ({ token, setToken }) => {
@@ -26,6 +28,9 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route index element={<CategoryList />} />
             <Route path="new" element={<NewCategoryForm />} />
           </Route>
+          <Route path=":id">
+              <Route path="edit" element={<EditCategory />} />
+          </Route>
 
           {/* Posts Routes */}
           <Route path="posts">
@@ -34,6 +39,7 @@ export const ApplicationViews = ({ token, setToken }) => {
               <Route index element={<ViewPostDetails token={token} />} />
               <Route path="edit" element={<EditPost token={token} />} />
               <Route path="comments" element={<Comments />} />
+              <Route path="comments/new" element={<NewCommentForm token={token}/>}/>
             </Route>
             <Route path="new" element={<CreatePost token={token} />} />
           </Route>
