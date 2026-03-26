@@ -3,58 +3,33 @@ import { deletePost, getUserPosts } from "../../managers/PostsManager";
 import { Link } from "react-router-dom";
 
 export const MyPosts = ({ token }) => {
-  console.log("MyPosts received token:", token);
   const [myPosts, setMyPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // Fetch user's posts when component mounts or when token (user) changes
   useEffect(() => {
-    console.log("useEffect running with token:", token);
     
     setLoading(true);
-    const userId = token;
-    
-    if (userId) {
-      console.log("Fetching posts for userId:", userId);
-      getUserPosts(userId)
-        .then((response) => {
-          console.log("Response from backend:", response)
-          let postsArray = [];
-          if (Array.isArray(response)) {
-            postsArray = response;
-          } else if (response?.results && Array.isArray(response.results)) {
-            postsArray = response.results;
-          } else if (response?.data && Array.isArray(response.data)) {
-            postsArray = response.data;
-          } else if (response && response.id) {
-            postsArray = [response];
-          }
-          setMyPosts(postsArray);
-          setError(null);
-        })
-        .catch((err) => {
-          setError(err);
-          setMyPosts([]);
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setError("User not found");
-      setMyPosts([]);
-      setLoading(false);
-    }
-  }, [token]); // Re-run when token changes
+    const userId = token; 
+    if (userId) { 
+     updateUserPosts()   
+  }
+}, [token]); // Re-run when token changes
 
+  const updateUserPosts = () => {
+    getUserPosts(token).then((response) => {  
+        setMyPosts(response);
+        setLoading(false)
+        })
+  }
   // Delete a post after user confirmation
   const handleDeletePost = (postId) => {
     if (window.confirm("Are you sure you want to delete this post?")) {
       deletePost(postId)
         .then(() => {
-          setMyPosts(myPosts.filter((post) => post.id !== postId));
+          updateUserPosts();
         })
-        .catch((error) => setError(error));
-        console.error("Delete error:", error);
-        setError(error);
     }
   };
 
