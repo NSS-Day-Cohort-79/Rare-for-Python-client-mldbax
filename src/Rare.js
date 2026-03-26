@@ -5,10 +5,10 @@ import { NavBar } from "./components/nav/NavBar"
 
 
 export const Rare = () => {
-  const [token, setTokenState] = useState(localStorage.getItem('token'))
+  const [token, setTokenState] = useState(localStorage.getItem('auth_token'))
 
   const setToken = (newToken) => {
-    localStorage.setItem('token', newToken)
+    localStorage.setItem('auth_token', newToken)
     setTokenState(newToken)
   }
 
