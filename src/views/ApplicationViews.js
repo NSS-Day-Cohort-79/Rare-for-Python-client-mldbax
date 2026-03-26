@@ -13,6 +13,7 @@ import { CreatePost } from "../components/posts/CreatePost";
 import { EditPost } from "../components/posts/EditPost";
 import { EditCategory } from "../components/categories/EditCategory";
 import { NewCommentForm } from "../components/comments/NewCommentForm";
+import { EditCommentForm } from "../components/comments/EditCommentForm";
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
@@ -27,7 +28,7 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route path="new" element={<NewCategoryForm />} />
           </Route>
           <Route path=":id">
-              <Route path="edit" element={<EditCategory />} />
+            <Route path="edit" element={<EditCategory />} />
           </Route>
           <Route path="/posts">
             <Route index element={<PostList />} />
@@ -35,7 +36,10 @@ export const ApplicationViews = ({ token, setToken }) => {
               <Route index element={<ViewPostDetails token={token} />} />
               <Route path="edit" element={<EditPost token={token} />} />
               <Route path="comments" element={<Comments />} />
-              <Route path="comments/new" element={<NewCommentForm token={token}/>}/>
+              <Route
+                path="comments/new"
+                element={<NewCommentForm token={token} />}
+              />
             </Route>
             <Route path="new" element={<CreatePost token={token} />} />
           </Route>
@@ -43,6 +47,10 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route index element={<TagList />} />
             <Route path="new" element={<CreateTag />} />
           </Route>
+          <Route
+            path="/comment/:commentId/edit"
+            element={<EditCommentForm token={token} />}
+          />
         </Route>
       </Routes>
     </>
