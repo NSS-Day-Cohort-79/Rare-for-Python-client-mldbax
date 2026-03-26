@@ -1,15 +1,33 @@
-import { useState } from "react";
-import { createTag } from "../../managers/TagManager";
+import { useEffect, useState } from "react";
+import { createTag, getAllTags } from "../../managers/TagManager";
 import { useNavigate } from "react-router-dom";
 
 export const CreateTag = () => {
   const [label, setLabel] = useState("");
+  const [allTags, setAllTags] = useState([]);
   const navigate = useNavigate();
+
+  // get list of current tags
+  useEffect(() => {
+    getAllTags().then((tags) => {
+      setAllTags(tags);
+    });
+  }, []);
+
+  // check if user input already exists in tag list
+
+  const handleTagCheck = (userInput) => {
+    if (allTags.some((c) => c.label === userInput)) {
+      return true;
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (label.trim() === "") {
       alert("Please input a tag");
+    } else if (handleTagCheck(label)) {
+      alert("Category already exists");
     } else {
       createTag({
         label: label,
