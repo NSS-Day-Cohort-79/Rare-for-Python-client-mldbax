@@ -44,14 +44,10 @@ export const TagList = () => {
                   <a className="tag is-info is-hoverable" href="/">
                     {tag.label}
                   </a>
-                  <Link
-                    className="tag is-light"
-                    to={`${tag.id}/edit`}
-                    href="/"
-                  >
+                  <Link className="tag is-light" to={`${tag.id}/edit`} href="/">
                     &#9881;
                   </Link>
-                  <a
+                  <Link
                     aria-label="edit tag"
                     className="tag is-delete"
                     href="/"
@@ -59,9 +55,7 @@ export const TagList = () => {
                       e.preventDefault();
                       handleDelete(tag.id);
                     }}
-                  >
-
-                  </a>
+                  ></Link>
                 </div>
               );
             })}

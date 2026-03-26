@@ -53,7 +53,7 @@ export const CategoryList = () => {
                 >
                   &#9881;
                 </Link>
-                <a
+                <Link
                   aria-label="edit category"
                   className="tag is-delete"
                   href="/"
@@ -61,9 +61,7 @@ export const CategoryList = () => {
                     e.preventDefault();
                     handleDelete(category.id);
                   }}
-                >
-
-                </a>
+                ></Link>
               </div>
             );
           })}
