@@ -14,6 +14,15 @@ export const EditCommentForm = ({ token }) => {
   });
 
   useEffect(() => {
+    // TODO check if comment belongs to current user
+    getCommentById(commentId).then((commentObj) => {
+      if (commentObj.authorId !== parseInt(token)) {
+        navigate(-1);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     getCommentById(commentId).then(setComment);
   }, []);
 
