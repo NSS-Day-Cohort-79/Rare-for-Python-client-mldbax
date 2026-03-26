@@ -76,7 +76,7 @@ export const MyPosts = ({ token }) => {
                     <p className="title is-5 mb-2">{post.title}</p>
                   </Link>
                   <p className="mb-3">
-                    Author: {post.user.first_name} {post.user.last_name}
+                    Author: {post.user.firstName} {post.user.lastName}
                   </p>
                   <p className="mb-3">
                     Category: {post.category.label}
