@@ -19,3 +19,13 @@ export const getCommentById = (commentId) => {
     res.json(),
   );
 };
+
+export const updateComment = (body, commentId) => {
+  return fetch(`http://localhost:8088/comments/${commentId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+};
