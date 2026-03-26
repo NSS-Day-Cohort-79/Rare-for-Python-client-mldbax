@@ -36,11 +36,14 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route path=":postId">
               <Route index element={<ViewPostDetails token={token} />} />
               <Route path="edit" element={<EditPost token={token} />} />
-              <Route path="comments" element={<Comments />} />
-              <Route
-                path="comments/new"
-                element={<NewCommentForm token={token} />}
-              />
+              <Route path="comments">
+                <Route index element={<Comments token={token} />} />
+                <Route path="new" element={<NewCommentForm token={token} />} />
+                <Route
+                  path=":commentId/edit"
+                  element={<EditCommentForm token={token} />}
+                />
+              </Route>
             </Route>
             <Route path="new" element={<CreatePost token={token} />} />
           </Route>
@@ -51,10 +54,6 @@ export const ApplicationViews = ({ token, setToken }) => {
               <Route path="edit" element={<EditTag />} />
             </Route>
           </Route>
-          <Route
-            path="/comment/:commentId/edit"
-            element={<EditCommentForm token={token} />}
-          />
         </Route>
       </Routes>
     </>
