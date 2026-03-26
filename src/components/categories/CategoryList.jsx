@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 
 export const CategoryList = () => {
   const [categoryArray, setCategoryArray] = useState([]);
- 
 
   useEffect(() => {
     getCategories().then((categories) => {
@@ -14,43 +13,54 @@ export const CategoryList = () => {
 
   // handle delete passing category id add alert to make sure admin wants to delete it
   const handleDelete = (id) => {
-    const yesDelete = window.confirm("Are you sure you want to delete this category?");
+    const yesDelete = window.confirm(
+      "Are you sure you want to delete this category?",
+    );
     if (yesDelete) {
       deleteCategory(id).then(() => {
         getCategories().then((categories) => {
-          setCategoryArray(categories)
-        })
-      })
+          setCategoryArray(categories);
+        });
+      });
     }
-  }
+  };
 
   return (
     <>
       <div className="container">
-          {/* add link for Create New Category, route to /new */}
-           <nav className="level">
-            <div className="level-left"></div>
-            <div className="level-right">
-              <p className="level-item"></p>
-              <a className="button is-success" href="categories/new">Create Category</a>
-            </div>
-            </nav>
+        {/* add link for Create New Category, route to /new */}
+        <nav className="level">
+          <div className="level-left"></div>
+          <div className="level-right">
+            <p className="level-item"></p>
+            <a className="button is-success" href="categories/new">
+              Create Category
+            </a>
+          </div>
+        </nav>
         <div className="section is-normal">
           <h1 className="title">Categories</h1>
           {categoryArray.map((category) => {
             return (
               <div className="tags has-addons are-medium" key={category.id}>
-                <a className="tag is-info is-hoverable" href="/">
+                <div className="tag is-info" href="/">
                   {category.label}
-                </a>
-                <Link className="tag is-light" to={`/${category.id}/edit`} href="/">
+                </div>
+                <Link
+                  className="tag is-light"
+                  to={`${category.id}/edit`}
+                  href="/"
+                >
                   &#9881;
                 </Link>
-                <a className="tag is-delete" href="/" onClick={(e) => {
-                  e.preventDefault()
-                  handleDelete(category.id)
-                }}>
-                </a>
+                <Link
+                  aria-label="edit category"
+                  className="tag is-delete"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleDelete(category.id);
+                  }}
+                ></Link>
               </div>
             );
           })}
@@ -58,4 +68,4 @@ export const CategoryList = () => {
       </div>
     </>
   );
-}
+};
