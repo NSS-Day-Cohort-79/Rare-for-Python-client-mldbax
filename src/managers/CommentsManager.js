@@ -13,3 +13,9 @@ export const createComment = (body) => {
     body: JSON.stringify(body),
   }).then((res) => res.json());
 };
+
+export const getCommentById = (commentId) => {
+  return fetch(`http://localhost:8088/comments/${commentId}`).then((res) =>
+    res.json(),
+  );
+};
