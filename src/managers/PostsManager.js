@@ -47,7 +47,12 @@ export const deletePost = (postId) => {
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((res) => res.json());
+  }).then((res) => {
+    if (res.ok) {
+      return { message: "Post deleted successfully" };
+    }
+    throw new Error("Failed to delete post");
+  });
 };
 
 export const updatePost = (body) => {

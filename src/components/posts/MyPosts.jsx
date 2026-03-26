@@ -52,7 +52,9 @@ export const MyPosts = ({ token }) => {
         .then(() => {
           setMyPosts(myPosts.filter((post) => post.id !== postId));
         })
-        .catch((err) => setError(err));
+        .catch((error) => setError(error));
+        console.error("Delete error:", error);
+        setError(error);
     }
   };
 
