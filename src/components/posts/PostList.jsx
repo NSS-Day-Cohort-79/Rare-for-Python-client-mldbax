@@ -28,7 +28,7 @@ export const PostList = () => {
           {allPosts.map((post) => {
             return (
               <div
-                className="column is-half is-flex is-align-items-stretch equal-height"
+                className="column is-half is-flex is-align-items-stretch equal-height is-clickable"
                 key={post.id}
                 onClick={() => {
                   navigate(`/posts/${post.id}`);

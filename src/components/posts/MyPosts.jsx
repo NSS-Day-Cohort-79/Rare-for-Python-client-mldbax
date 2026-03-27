@@ -46,7 +46,7 @@ export const MyPosts = ({ token }) => {
             ) : (
               myPosts.map((post) => (
                 <div
-                  className="card mb-5"
+                  className="card mb-5 is-clickable"
                   key={post.id}
                   onClick={() => {
                     navigate(`/posts/${post.id}`);
