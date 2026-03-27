@@ -13,6 +13,8 @@ import { CreatePost } from "../components/posts/CreatePost";
 import { EditPost } from "../components/posts/EditPost";
 import { EditCategory } from "../components/categories/EditCategory";
 import { NewCommentForm } from "../components/comments/NewCommentForm";
+import { EditTag } from "../components/tags/EditTag";
+import { MyPosts } from "../components/posts/MyPosts";
 
 export const ApplicationViews = ({ token, setToken }) => {
   return (
@@ -22,14 +24,18 @@ export const ApplicationViews = ({ token, setToken }) => {
         <Route path="/register" element={<Register setToken={setToken} />} />
         <Route element={<Authorized token={token} />}>
           {/* Add Routes here */}
+          <Route index element={<PostList />} />
+          {/* Categories Routes */}
           <Route path="/categories">
             <Route index element={<CategoryList />} />
             <Route path="new" element={<NewCategoryForm />} />
+              <Route path=":id">
+                <Route path="edit" element={<EditCategory />} />
+              </Route>
           </Route>
-          <Route path=":id">
-              <Route path="edit" element={<EditCategory />} />
-          </Route>
-          <Route path="/posts">
+
+          {/* Posts Routes */}
+          <Route path="posts">
             <Route index element={<PostList />} />
             <Route path=":postId">
               <Route index element={<ViewPostDetails token={token} />} />
@@ -39,9 +45,15 @@ export const ApplicationViews = ({ token, setToken }) => {
             </Route>
             <Route path="new" element={<CreatePost token={token} />} />
           </Route>
-          <Route path="/tags">
+            <Route path="/my-posts" element={<MyPosts token={token} />} />
+
+          {/* Tags Routes */}
+          <Route path="tags">
             <Route index element={<TagList />} />
             <Route path="new" element={<CreateTag />} />
+              <Route path=":id">
+               <Route path="edit" element={<EditTag />} />
+              </Route>
           </Route>
         </Route>
       </Routes>
