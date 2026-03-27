@@ -37,6 +37,7 @@ export const MyPosts = ({ token }) => {
   if (error) return <p>Error loading posts: {error.message || error}</p>;
 
   return (
+    <main className="pt-5">
     <div className="container">
       <div className="columns is-centered">
         <div className="column is-two-thirds">
@@ -70,6 +71,7 @@ export const MyPosts = ({ token }) => {
           )}
         </div>
       </div>
-    </div>
+      </div>
+      </main>
   );
 };

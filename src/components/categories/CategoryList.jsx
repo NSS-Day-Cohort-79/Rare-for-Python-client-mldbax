@@ -27,6 +27,7 @@ export const CategoryList = () => {
 
   return (
     <>
+     <main className="pt-5">
       <div className="container">
         {/* add link for Create New Category, route to /new */}
         <nav className="level">
@@ -65,7 +66,8 @@ export const CategoryList = () => {
             );
           })}
         </div>
-      </div>
+        </div>
+        </main>
     </>
   );
 };
