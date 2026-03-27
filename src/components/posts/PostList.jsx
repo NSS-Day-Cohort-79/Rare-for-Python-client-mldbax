@@ -26,8 +26,8 @@ export const PostList = () => {
       <div className="columns is-multiline">
           {allPosts.map((post) => {
             return (
-              <div className="column is-half is-flex is-align-items-stretch equal-height">
-              <div className="card is-flex is-flex-direction-column equal-height" key={post.id}>
+              <div className="column is-half is-flex is-align-items-stretch equal-height" key={post.id}>
+              <div className="card is-flex is-flex-direction-column equal-height">
                 {/* CD - only show image if image_url is populated */}
                 {post.imageUrl && (
                   <div className="card-image">
