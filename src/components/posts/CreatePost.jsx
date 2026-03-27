@@ -57,6 +57,11 @@ export const CreatePost = ({ token }) => {
     setNewTags(copy);
   };
 
+  const removeTag = (tagId) => {
+    const copy = newTags.filter((tag) => tag.id !== tagId);
+    setNewTags(copy);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newPost.categoryId > 0) {
@@ -148,11 +153,17 @@ export const CreatePost = ({ token }) => {
             </div>
             <div className="field">
               <label className="label">Tags</label>
-              <div className="tags">
+              <div className="field is-grouped is-grouped-multiline">
                 {newTags.map((tag) => {
                   return (
-                    <div className="tag is-info" key={tag.id}>
-                      {tag.label}
+                    <div className="control" key={tag.id}>
+                      <div className="tags has-addons">
+                        <div className="tag is-info">{tag.label}</div>
+                        <div
+                          className="tag is-delete"
+                          onClick={() => removeTag(tag.id)}
+                        ></div>
+                      </div>
                     </div>
                   );
                 })}
