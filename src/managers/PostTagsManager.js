@@ -7,3 +7,9 @@ export const createPostTag = (body) => {
     body: JSON.stringify(body),
   }).then((res) => res.json());
 };
+
+export const deletePostTag = (id) => {
+  return fetch(`http://localhost:8088/post-tags/${id}`, {
+    method: "DELETE",
+  });
+};

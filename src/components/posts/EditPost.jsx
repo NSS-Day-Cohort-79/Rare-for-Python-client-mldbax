@@ -7,7 +7,7 @@ import {
 } from "../../managers/PostsManager";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAllTags } from "../../managers/TagManager";
-import { createPostTag } from "../../managers/PostTagsManager";
+import { createPostTag, deletePostTag } from "../../managers/PostTagsManager";
 
 export const EditPost = ({ token }) => {
   const [postInfo, setPostInfo] = useState({
@@ -79,6 +79,11 @@ export const EditPost = ({ token }) => {
     setNewTags(copy);
   };
 
+  const removeTag = (tagId) => {
+    const copy = newTags.filter((tag) => tag.id !== tagId);
+    setNewTags(copy);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     updatePost(postInfo).then(() => {
@@ -89,9 +94,19 @@ export const EditPost = ({ token }) => {
           newPostTags.push({ postId: parseInt(postId), tagId: newTag.id });
         }
       }
+      let removedPostTags = [];
+      for (const postTag of postInfo.tags) {
+        if (!newTags.some((tag) => tag.id === postTag.tagId)) {
+          removedPostTags.push(postTag.id);
+        }
+      }
       Promise.all(newPostTags.map((postTag) => createPostTag(postTag))).then(
         () => {
-          navigate(-1);
+          Promise.all(removedPostTags.map((id) => deletePostTag(id))).then(
+            () => {
+              navigate(-1);
+            },
+          );
         },
       );
     });
@@ -170,11 +185,17 @@ export const EditPost = ({ token }) => {
             </div>
             <div className="field">
               <label className="label">Tags</label>
-              <div className="tags">
+              <div className="field is-grouped is-grouped-multiline">
                 {newTags.map((tag) => {
                   return (
-                    <div className="tag is-info" key={tag.id}>
-                      {tag.label}
+                    <div className="control" key={tag.id}>
+                      <div className="tags has-addons">
+                        <div className="tag is-info">{tag.label}</div>
+                        <div
+                          className="tag is-delete"
+                          onClick={() => removeTag(tag.id)}
+                        ></div>
+                      </div>
                     </div>
                   );
                 })}
