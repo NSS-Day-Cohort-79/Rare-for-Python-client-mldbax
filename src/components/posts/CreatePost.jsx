@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { getCategories } from "../../managers/CategoryManager";
 import { createPost } from "../../managers/PostsManager";
 import { useNavigate } from "react-router-dom";
+import { getAllTags } from "../../managers/TagManager";
+import { createPostTag } from "../../managers/PostTagsManager";
 
 export const CreatePost = ({ token }) => {
   const [newPost, setNewPost] = useState({
@@ -10,12 +12,30 @@ export const CreatePost = ({ token }) => {
     imageUrl: "",
   });
   const [allCategories, setAllCategories] = useState([]);
+  const [allTags, setAllTags] = useState([]);
+  const [availableTags, setAvailableTags] = useState([]);
+  const [newTags, setNewTags] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     getCategories().then(setAllCategories);
+    getAllTags().then((tagArray) => {
+      setAllTags(tagArray);
+      setAvailableTags(tagArray);
+    });
   }, []);
+
+  useEffect(() => {
+    updateTags();
+  }, [allTags, newTags]);
+
+  const updateTags = () => {
+    const filteredTags = allTags.filter(
+      (tag) => !newTags.some((newTag) => newTag.id === tag.id),
+    );
+    setAvailableTags(filteredTags);
+  };
 
   const handleChange = (e) => {
     let copy = { ...newPost };
@@ -28,11 +48,36 @@ export const CreatePost = ({ token }) => {
     setNewPost(copy);
   };
 
+  const addTag = (e) => {
+    let copy = structuredClone(newTags);
+    const tagObj = availableTags.find(
+      (tag) => tag.id === parseInt(e.target.value),
+    );
+    copy.push(tagObj);
+    setNewTags(copy);
+  };
+
+  const removeTag = (tagId) => {
+    const copy = newTags.filter((tag) => tag.id !== tagId);
+    setNewTags(copy);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newPost.categoryId > 0) {
       let copy = { ...newPost, userId: parseInt(token) };
-      createPost(copy).then((res) => navigate(`/posts/${res.id}`));
+      createPost(copy).then((res) => {
+        // get tags to Add
+        let newPostTags = [];
+        for (const newTag of newTags) {
+          newPostTags.push({ postId: parseInt(res.id), tagId: newTag.id });
+        }
+        Promise.all(newPostTags.map((postTag) => createPostTag(postTag))).then(
+          () => {
+            navigate(`/posts/${res.id}`);
+          },
+        );
+      });
     } else {
       alert("Please pick a category");
     }
@@ -99,6 +144,40 @@ export const CreatePost = ({ token }) => {
                       return (
                         <option key={category.id} value={category.id}>
                           {category.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="field">
+              <label className="label">Tags</label>
+              <div className="field is-grouped is-grouped-multiline">
+                {newTags.map((tag) => {
+                  return (
+                    <div className="control" key={tag.id}>
+                      <div className="tags has-addons">
+                        <div className="tag is-info">{tag.label}</div>
+                        <div
+                          className="tag is-delete"
+                          onClick={() => removeTag(tag.id)}
+                        ></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="control">
+                <div className="select">
+                  <select id="TagId" onChange={addTag} value={0} required>
+                    <option hidden value={0}>
+                      Add Tag
+                    </option>
+                    {availableTags.map((tag) => {
+                      return (
+                        <option key={tag.id} value={tag.id}>
+                          {tag.label}
                         </option>
                       );
                     })}
