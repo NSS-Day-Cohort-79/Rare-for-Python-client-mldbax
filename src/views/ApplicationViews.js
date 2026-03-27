@@ -13,6 +13,7 @@ import { CreatePost } from "../components/posts/CreatePost";
 import { EditPost } from "../components/posts/EditPost";
 import { EditCategory } from "../components/categories/EditCategory";
 import { NewCommentForm } from "../components/comments/NewCommentForm";
+import { EditCommentForm } from "../components/comments/EditCommentForm";
 import { EditTag } from "../components/tags/EditTag";
 import { MyPosts } from "../components/posts/MyPosts";
 
@@ -29,9 +30,9 @@ export const ApplicationViews = ({ token, setToken }) => {
           <Route path="/categories">
             <Route index element={<CategoryList />} />
             <Route path="new" element={<NewCategoryForm />} />
-              <Route path=":id">
-                <Route path="edit" element={<EditCategory />} />
-              </Route>
+            <Route path=":id">
+              <Route path="edit" element={<EditCategory />} />
+            </Route>
           </Route>
 
           {/* Posts Routes */}
@@ -40,8 +41,14 @@ export const ApplicationViews = ({ token, setToken }) => {
             <Route path=":postId">
               <Route index element={<ViewPostDetails token={token} />} />
               <Route path="edit" element={<EditPost token={token} />} />
-              <Route path="comments" element={<Comments />} />
-              <Route path="comments/new" element={<NewCommentForm token={token}/>}/>
+              <Route path="comments">
+                <Route index element={<Comments token={token} />} />
+                <Route path="new" element={<NewCommentForm token={token} />} />
+                <Route
+                  path=":commentId/edit"
+                  element={<EditCommentForm token={token} />}
+                />
+              </Route>
             </Route>
             <Route path="new" element={<CreatePost token={token} />} />
           </Route>
@@ -51,9 +58,9 @@ export const ApplicationViews = ({ token, setToken }) => {
           <Route path="tags">
             <Route index element={<TagList />} />
             <Route path="new" element={<CreateTag />} />
-              <Route path=":id">
-               <Route path="edit" element={<EditTag />} />
-              </Route>
+            <Route path=":id">
+              <Route path="edit" element={<EditTag />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

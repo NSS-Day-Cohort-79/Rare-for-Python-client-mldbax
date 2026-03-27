@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getCommentsByPostId } from "../../managers/CommentsManager";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  deleteComment,
+  getCommentsByPostId,
+} from "../../managers/CommentsManager";
 import { getPostById } from "../../managers/PostsManager";
 
-export const Comments = () => {
+export const Comments = ({ token }) => {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [comments, setComments] = useState([]);
@@ -11,9 +14,7 @@ export const Comments = () => {
 
   // get comments using postId from db, add them to array
   useEffect(() => {
-    getCommentsByPostId(postId).then((c) => {
-      setComments(c);
-    });
+    getComments();
   }, [postId]);
 
   // get post title from postId, in case there are no comments
@@ -22,6 +23,21 @@ export const Comments = () => {
       setPost(p);
     });
   }, [postId]);
+
+  const getComments = () => {
+    return getCommentsByPostId(postId).then((c) => {
+      setComments(c);
+    });
+  };
+
+  const handleCommentDelete = (commentId) => {
+    const yesDelete = window.confirm(
+      "Are you sure you want to delete this comment?",
+    );
+    if (yesDelete) {
+      deleteComment(commentId).then(getComments);
+    }
+  };
 
   return (
     <>
@@ -48,7 +64,33 @@ export const Comments = () => {
               {comments && comments.length > 0 ? (
                 comments.map((comment) => (
                   <div className="cell box" key={comment.id}>
-                    <div className="title">{comment.subject}</div>
+                    <div className="level">
+                      <div className="title level-left">{comment.subject}</div>
+                      <div className="level-right">
+                        {parseInt(token) === comment.author.authorId ? (
+                          <div>
+                            <Link
+                              className="button is-link is-small"
+                              to={`${comment.id}/edit`}
+                            >
+                              Edit
+                            </Link>
+                            <button
+                              className="button is-danger is-small ml-3"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleCommentDelete(comment.id);
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                    </div>
+
                     <div className="content">{comment.content}</div>
                     <div className="level">
                       <div className="level-left">
