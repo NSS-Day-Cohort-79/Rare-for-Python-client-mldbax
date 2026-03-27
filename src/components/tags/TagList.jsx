@@ -25,6 +25,7 @@ export const TagList = () => {
 
   return (
     <>
+      <main className="pt-5">
       <div className="container">
         <nav className="level">
           <div className="level-left"></div>
@@ -62,7 +63,8 @@ export const TagList = () => {
             })}
           </div>
         </div>
-      </div>
+        </div>
+        </main>
     </>
   );
 };

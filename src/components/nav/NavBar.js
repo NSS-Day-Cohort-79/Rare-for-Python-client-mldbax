@@ -16,7 +16,7 @@ export const NavBar = ({ token, setToken }) => {
   return (
     <nav
      
-      className="navbar is-success mb-3"
+      className="navbar is-success"
      
       role="navigation"
      
