@@ -6,6 +6,8 @@ import {
   updatePost,
 } from "../../managers/PostsManager";
 import { useNavigate, useParams } from "react-router-dom";
+import { getAllTags } from "../../managers/TagManager";
+import { createPostTag, deletePostTag } from "../../managers/PostTagsManager";
 
 export const EditPost = ({ token }) => {
   const [postInfo, setPostInfo] = useState({
@@ -16,18 +18,25 @@ export const EditPost = ({ token }) => {
     content: "",
   });
   const [allCategories, setAllCategories] = useState([]);
+  const [allTags, setAllTags] = useState([]);
+  const [availableTags, setAvailableTags] = useState([]);
+  const [newTags, setNewTags] = useState([]);
 
   const navigate = useNavigate();
 
   const { postId } = useParams();
 
   useEffect(() => {
-    // TODO check if post belongs to current user?
     getPostById(postId).then((postObj) => {
       if (postObj.userId === parseInt(token)) {
         delete postObj.category;
         delete postObj.user;
         setPostInfo(postObj);
+        let currentTags = [];
+        postObj.tags.forEach((postTag) => {
+          currentTags.push(postTag.tag);
+        });
+        setNewTags(currentTags);
       } else {
         navigate(-1);
       }
@@ -36,7 +45,19 @@ export const EditPost = ({ token }) => {
 
   useEffect(() => {
     getCategories().then(setAllCategories);
+    getAllTags().then(setAllTags);
   }, []);
+
+  useEffect(() => {
+    updateTags();
+  }, [allTags, newTags]);
+
+  const updateTags = () => {
+    const filteredTags = allTags.filter(
+      (tag) => !newTags.some((newTag) => newTag.id === tag.id),
+    );
+    setAvailableTags(filteredTags);
+  };
 
   const handleChange = (e) => {
     let copy = { ...postInfo };
@@ -49,9 +70,46 @@ export const EditPost = ({ token }) => {
     setPostInfo(copy);
   };
 
+  const addTag = (e) => {
+    let copy = structuredClone(newTags);
+    const tagObj = availableTags.find(
+      (tag) => tag.id === parseInt(e.target.value),
+    );
+    copy.push(tagObj);
+    setNewTags(copy);
+  };
+
+  const removeTag = (tagId) => {
+    const copy = newTags.filter((tag) => tag.id !== tagId);
+    setNewTags(copy);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    updatePost(postInfo).then(() => navigate(-1));
+    updatePost(postInfo).then(() => {
+      // get tags to Add
+      let newPostTags = [];
+      for (const newTag of newTags) {
+        if (!postInfo.tags.some((postTag) => postTag.tagId === newTag.id)) {
+          newPostTags.push({ postId: parseInt(postId), tagId: newTag.id });
+        }
+      }
+      let removedPostTags = [];
+      for (const postTag of postInfo.tags) {
+        if (!newTags.some((tag) => tag.id === postTag.tagId)) {
+          removedPostTags.push(postTag.id);
+        }
+      }
+      Promise.all(newPostTags.map((postTag) => createPostTag(postTag))).then(
+        () => {
+          Promise.all(removedPostTags.map((id) => deletePostTag(id))).then(
+            () => {
+              navigate(-1);
+            },
+          );
+        },
+      );
+    });
   };
 
   return (
@@ -118,6 +176,40 @@ export const EditPost = ({ token }) => {
                       return (
                         <option key={category.id} value={category.id}>
                           {category.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="field">
+              <label className="label">Tags</label>
+              <div className="field is-grouped is-grouped-multiline">
+                {newTags.map((tag) => {
+                  return (
+                    <div className="control" key={tag.id}>
+                      <div className="tags has-addons">
+                        <div className="tag is-info">{tag.label}</div>
+                        <div
+                          className="tag is-delete"
+                          onClick={() => removeTag(tag.id)}
+                        ></div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="control">
+                <div className="select">
+                  <select id="TagId" onChange={addTag} value={0} required>
+                    <option hidden value={0}>
+                      Add Tag
+                    </option>
+                    {availableTags.map((tag) => {
+                      return (
+                        <option key={tag.id} value={tag.id}>
+                          {tag.label}
                         </option>
                       );
                     })}
